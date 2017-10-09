@@ -52,7 +52,7 @@ public class ArticleAdapter extends BaseAdapter {
 
         for(i=0; i < authorList.size(); i++) {
 
-            allAuthors = allAuthors + " • " + authorList.get(i).toString();
+            allAuthors = allAuthors +authorList.get(i).getAuthorName().toString() + " • ";
         }
 
         if(view == null) {

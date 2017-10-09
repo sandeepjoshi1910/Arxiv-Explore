@@ -19,10 +19,13 @@ public class DataItem implements Parcelable {
     public String comment;
     public String journal_ref;
     public String pdf_link;
-
     public List<Author> authors = new ArrayList<Author>();
 
-    public DataItem(Parcel in) {
+    public DataItem() {
+
+    }
+
+    protected DataItem(Parcel in) {
         id = in.readString();
         publishedDate = in.readString();
         title = in.readString();
@@ -30,6 +33,24 @@ public class DataItem implements Parcelable {
         comment = in.readString();
         journal_ref = in.readString();
         pdf_link = in.readString();
+        authors = in.createTypedArrayList(Author.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(publishedDate);
+        dest.writeString(title);
+        dest.writeString(summary);
+        dest.writeString(comment);
+        dest.writeString(journal_ref);
+        dest.writeString(pdf_link);
+        dest.writeTypedList(authors);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<DataItem> CREATOR = new Creator<DataItem>() {
@@ -44,27 +65,8 @@ public class DataItem implements Parcelable {
         }
     };
 
-    public DataItem() {
-
-    }
-
     public void addAuthor(Author author) {
         authors.add(author);
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(publishedDate);
-        dest.writeString(title);
-        dest.writeString(summary);
-        dest.writeString(comment);
-        dest.writeString(journal_ref);
-        dest.writeString(pdf_link);
-    }
 }

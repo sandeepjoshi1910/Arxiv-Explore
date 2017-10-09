@@ -24,7 +24,9 @@
             android:name=".Services.GeneralService"
             android:exported="false" />
 
-        <activity android:name=".ArticleList"></activity>
+        <activity android:name=".ArticleList" />
+        <activity android:name=".Article" />
+        <activity android:name=".PDFView"></activity>
     </application>
 
 </manifest>
