@@ -19,7 +19,7 @@ public class DataItem implements Parcelable {
     public String comment;
     public String journal_ref;
     public String pdf_link;
-    public List<Author> authors = new ArrayList<Author>();
+    public Author[] authors = new ArrayList<Author>();
 
     public DataItem() {
 

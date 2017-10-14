@@ -15,7 +15,7 @@ public class PDFView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfview);
 
-        webView = (MyWebView) findViewById(R.id.webview);
+        webView = (WebView) findViewById(R.id.webview);
 
         Intent pdfIntent = getIntent();
         String url = pdfIntent.getExtras().getString("pdflink");
