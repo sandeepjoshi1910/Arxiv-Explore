@@ -15,8 +15,10 @@ import android.widget.EditText;
 
 import java.util.List;
 
+import sandeepjoshi1910.arxiv_explore.Model.Author;
 import sandeepjoshi1910.arxiv_explore.Model.DataItem;
 import sandeepjoshi1910.arxiv_explore.Services.GeneralService;
+import sandeepjoshi1910.arxiv_explore.Utilities.DatabaseHelper;
 import sandeepjoshi1910.arxiv_explore.Utilities.NetworkHelper;
 import sandeepjoshi1910.arxiv_explore.Utilities.Utils;
 
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     protected Button searchBtn;
     protected EditText searchTerm;
+
+    DatabaseHelper db;
 
     private BroadcastReceiver mBroadCastReciever = new BroadcastReceiver() {
         @Override
@@ -50,6 +54,29 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+
+        db = new DatabaseHelper(getApplicationContext());
+
+        Author author = new Author();
+        author.setAuthorName("Sandeep Joshi");
+        author.setAuthorAffiliation("UIC");
+
+        DataItem article = new DataItem();
+        article.id = "one";
+        article.title = "Image Contrast enhancement using Fuzzy Logic";
+        article.summary = "I don't remember";
+        article.authors.add(author);
+
+        db.CreateArticle(article);
+
+        List<DataItem> articles = db.getBookmarkedArticles();
+
+        for (DataItem farticle: articles) {
+            Log.i("DB", "DB: " + farticle.title);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
