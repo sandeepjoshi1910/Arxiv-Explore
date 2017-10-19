@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
             if(intent.hasExtra(GeneralService.SERVICE_PAYLOAD)) {
                 DataItem[] dataItems = (DataItem[]) intent.getParcelableArrayExtra(GeneralService.SERVICE_PAYLOAD);
-                Log.i("Main", "onReceive: Data Items title: " + dataItems[2].title);
+//                Log.i("Main", "onReceive: Data Items title: " + dataItems[2].title);
 
 //                List<DataItem[]> articleList = dataItems;
 
@@ -54,28 +55,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
-
-        db = new DatabaseHelper(getApplicationContext());
-
-        Author author = new Author();
-        author.setAuthorName("Sandeep Joshi");
-        author.setAuthorAffiliation("UIC");
-
-        DataItem article = new DataItem();
-        article.id = "one";
-        article.title = "Image Contrast enhancement using Fuzzy Logic";
-        article.summary = "I don't remember";
-        article.authors.add(author);
-
-        db.CreateArticle(article);
-
-        List<DataItem> articles = db.getBookmarkedArticles();
-
-        for (DataItem farticle: articles) {
-            Log.i("DB", "DB: " + farticle.title);
-        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -100,19 +79,26 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener searchBtnListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+
+            if(!NetworkHelper.hasNetworkAccess(getApplicationContext())) {
+                Log.i("Click", "onClick: No Network Access... Can't get articles");
+                Toast.makeText(getApplicationContext(),"No Network Access",Toast.LENGTH_SHORT);
+                return;
+            }
+
             String searchTermEntered = searchTerm.getText().toString();
             Boolean shouldProceed = new Utils().isSearchTermValid(searchTermEntered);
 
             if(shouldProceed) {
-                getResults();
+                getResults(searchTermEntered);
             }
         }
     };
 
-    void getResults() {
+    void getResults(String searchTerm) {
 
         Intent getArticlesIntent = new Intent(this, GeneralService.class);
-        getArticlesIntent.setData(Uri.parse(XML_URL));
+        getArticlesIntent.setData(Uri.parse(Utils.getFinalUrl(searchTerm,0,20)));
         startService(getArticlesIntent);
     }
 
