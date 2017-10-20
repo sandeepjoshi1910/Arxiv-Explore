@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import sandeepjoshi1910.arxiv_explore.Model.DataItem;
@@ -28,6 +29,7 @@ public class ArticleList extends AppCompatActivity {
 
     Button nextBtn;
     Button prevBtn;
+    TextView pageNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +81,7 @@ public class ArticleList extends AppCompatActivity {
 
         nextBtn = (Button)footer.findViewById(R.id.nextBtn);
         prevBtn = (Button)footer.findViewById(R.id.previousBtn);
-
+        pageNum = (TextView)footer.findViewById(R.id.pageNumber);
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,8 +106,10 @@ public class ArticleList extends AppCompatActivity {
         });
 
 
+        pageNum.setText(""+pageNo);
+
         if(pageNo == 0) {
-            prevBtn.setEnabled(false);
+            prevBtn.setClickable(false);
         }
 
     }
