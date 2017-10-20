@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="sandeepjoshi1910.arxiv_explore.ArticleList">
-
+    tools:context="sandeepjoshi1910.arxiv_explore.ArticleList"
+    android:id="@+id/article_list_activity">
 
     <ListView
         android:id="@+id/articleListView"

@@ -41,7 +41,6 @@ public class Utils {
 
         }
 
-
         String initialUrl = "http://export.arxiv.org/api/query?search_query=";
 
         String url = initialUrl + finalTerm + "&start=" + start + "&max_results=" + end + "&sortBy=relevance&sortOrder=ascending";

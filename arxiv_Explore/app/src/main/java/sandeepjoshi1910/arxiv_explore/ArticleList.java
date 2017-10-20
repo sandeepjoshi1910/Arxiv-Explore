@@ -1,6 +1,8 @@
 package sandeepjoshi1910.arxiv_explore;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +23,9 @@ public class ArticleList extends AppCompatActivity {
 
     LayoutInflater layoutInflater;
 
+    protected int pageNo;
+    protected String searchTerm;
+
     Button nextBtn;
     Button prevBtn;
 
@@ -38,6 +43,10 @@ public class ArticleList extends AppCompatActivity {
 //               articles = (DataItem[]) dataBundle.getParcelableArray("articles");
 //        DataItem[] dataItems = (DataItem[]) data.get("articles");
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        searchTerm = prefs.getString("SearchTerm","");
+
+        pageNo = getIntent().getExtras().getInt("PageNo");
 
 
         for(int i=0; i<dataBundle.getParcelableArray("articles").length; i++) {
@@ -75,18 +84,29 @@ public class ArticleList extends AppCompatActivity {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Next Button clicked",Toast.LENGTH_SHORT);
+                Intent nextIntent = new Intent(ArticleList.this,ArticlesRetriever.class);
+                nextIntent.putExtra("pageNo",pageNo);
+                nextIntent.putExtra("action","Next");
+                nextIntent.putExtra("searchTerm",searchTerm);
+                startActivity(nextIntent);
             }
         });
 
         prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Previous Button clicked",Toast.LENGTH_SHORT);
+                Intent prevIntent = new Intent(ArticleList.this,ArticlesRetriever.class);
+                prevIntent.putExtra("pageNo",pageNo);
+                prevIntent.putExtra("action","Previous");
+                prevIntent.putExtra("searchTerm",searchTerm);
+                startActivity(prevIntent);
             }
         });
 
 
+        if(pageNo == 0) {
+            prevBtn.setEnabled(false);
+        }
 
     }
 

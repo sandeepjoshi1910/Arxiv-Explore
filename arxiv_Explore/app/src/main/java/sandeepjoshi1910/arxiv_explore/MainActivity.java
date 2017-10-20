@@ -25,10 +25,6 @@ import sandeepjoshi1910.arxiv_explore.Utilities.Utils;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String XML_URL =
-            "http://export.arxiv.org/api/query?search_query=all:electron";
-
-
     protected Button searchBtn;
     protected EditText searchTerm;
 
@@ -90,8 +86,16 @@ public class MainActivity extends AppCompatActivity {
             Boolean shouldProceed = new Utils().isSearchTermValid(searchTermEntered);
 
             if(shouldProceed) {
-                getResults(searchTermEntered);
+//               getResults(searchTermEntered);
+                Intent articlesRetIntent = new Intent(MainActivity.this, ArticlesRetriever.class);
+                articlesRetIntent.putExtra("SearchTerm",searchTermEntered);
+                startActivity(articlesRetIntent);
             }
+
+
+            Intent articlesRetIntent = new Intent(MainActivity.this, ArticlesRetriever.class);
+            articlesRetIntent.putExtra("SearchTerm",searchTermEntered);
+            startActivity(articlesRetIntent);
         }
     };
 

@@ -1,0 +1,146 @@
+package sandeepjoshi1910.arxiv_explore;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.net.Uri;
+import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+
+import sandeepjoshi1910.arxiv_explore.Model.DataItem;
+import sandeepjoshi1910.arxiv_explore.Services.GeneralService;
+import sandeepjoshi1910.arxiv_explore.Utilities.Utils;
+
+public class ArticlesRetriever extends AppCompatActivity {
+
+    public int start = 0;
+    public int max = 20;
+    public String search;
+    public int pageNo =0;
+
+
+    public BroadcastReceiver mBroadCastReciever = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if(intent.hasExtra(GeneralService.SERVICE_PAYLOAD)) {
+                DataItem[] dataItems = (DataItem[]) intent.getParcelableArrayExtra(GeneralService.SERVICE_PAYLOAD);
+//                Log.i("Main", "onReceive: Data Items title: " + dataItems[2].title);
+
+//                List<DataItem[]> articleList = dataItems;
+
+//                Bundle dataBundle = new Bundle();
+//                dataBundle.putParcelableArray("articles", dataItems);
+
+                Intent articlesListIntent = new Intent(ArticlesRetriever.this, ArticleList.class);
+                articlesListIntent.putExtra("articles", dataItems);
+                articlesListIntent.putExtra("PageNo",pageNo);
+                startActivity(articlesListIntent);
+            }
+        }
+    };
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_articles_retriever);
+
+        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(mBroadCastReciever, new IntentFilter(GeneralService.SERVICE_MESSAGE));
+
+        Intent searchIntent = getIntent();
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        if(searchIntent.getExtras().get("SearchTerm") != null) {
+
+            search = (String) searchIntent.getExtras().get("SearchTerm");
+            editor.putString("SearchTerm",search);
+            editor.apply();
+        } else {
+
+            search = prefs.getString("SearchTerm","");
+
+        }
+
+
+
+        Integer pageNum = searchIntent.getExtras().getInt("pageNo");
+
+        String action = searchIntent.getExtras().getString("action");
+
+        if (action != null) {
+
+            if(action.equals("Next")) {
+
+                pageNo = (int) searchIntent.getExtras().get("pageNo") + 1;
+                start =  pageNo * 20;
+
+            } else if(action.equals("Previous")) {
+                pageNo = (int) searchIntent.getExtras().get("pageNo") - 1;
+                start =  pageNo * 20;
+            }
+        }
+
+        getResults(search);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+        outState.putInt("start",start);
+        outState.putInt("max",max);
+        outState.putString("searchTerm",search);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+
+        if(savedInstanceState!= null && savedInstanceState.get("start") != null) {
+            start = (int) savedInstanceState.get("start");
+            start = start + max;
+        } else {
+            start = 0;
+        }
+
+        if(savedInstanceState!= null && savedInstanceState.get("max") != null) {
+            max = (int) savedInstanceState.get("max");
+        } else {
+            max = 20;
+        }
+
+        if(savedInstanceState!= null && savedInstanceState.get("searchTerm") != null) {
+            search = (String) savedInstanceState.get("searchTerm");
+        }
+
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(mBroadCastReciever);
+    }
+
+
+    void getResults(String searchTerm) {
+
+        Intent getArticlesIntent = new Intent(this, GeneralService.class);
+        getArticlesIntent.setData(Uri.parse(Utils.getFinalUrl(searchTerm,start,max)));
+        startService(getArticlesIntent);
+    }
+}
