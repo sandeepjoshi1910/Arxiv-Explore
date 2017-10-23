@@ -31,6 +31,8 @@ public class ArticleList extends AppCompatActivity {
     Button prevBtn;
     TextView pageNum;
 
+    TextView title;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +69,7 @@ public class ArticleList extends AppCompatActivity {
 
         articleAdapter.notifyDataSetChanged();
 
+        articlesView.setItemsCanFocus(false);
         articlesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

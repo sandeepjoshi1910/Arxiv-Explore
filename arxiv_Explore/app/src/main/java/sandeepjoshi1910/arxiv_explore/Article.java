@@ -6,9 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import sandeepjoshi1910.arxiv_explore.Model.DataItem;
+import sandeepjoshi1910.arxiv_explore.Utilities.Utils;
 
 public class Article extends AppCompatActivity {
 
@@ -17,7 +19,7 @@ public class Article extends AppCompatActivity {
     protected TextView articleTitle;
     protected TextView authors;
     protected TextView summary;
-
+    protected ImageButton bookmark_btn;
     protected Button viewPDF;
 
     @Override
@@ -34,12 +36,13 @@ public class Article extends AppCompatActivity {
         summary = (TextView) findViewById(R.id.article_summary);
 
         articleTitle.setText(currentArticle.title);
-        authors.setText(currentArticle.authors.get(0).getAuthorName());
+        authors.setText(Utils.getFormattedAuthorNames(currentArticle.authors));
         summary.setText(currentArticle.summary);
-
+        bookmark_btn = (ImageButton)findViewById(R.id.bookmark_btn);
         viewPDF = (Button)findViewById(R.id.viewpdf);
 
         viewPDF.setOnClickListener(viewPdfListener);
+        bookmark_btn.setOnClickListener(bookmarkBtnListener);
     }
 
 
@@ -50,6 +53,13 @@ public class Article extends AppCompatActivity {
             Intent viewPdfIntent = new Intent(Article.this,PDFView.class);
             viewPdfIntent.putExtra("pdflink",currentArticle.pdf_link);
             startActivity(viewPdfIntent);
+        }
+    };
+
+    View.OnClickListener bookmarkBtnListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            // Add an entry to the DB
         }
     };
 

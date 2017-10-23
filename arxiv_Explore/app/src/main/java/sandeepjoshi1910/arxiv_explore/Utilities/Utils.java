@@ -2,8 +2,11 @@ package sandeepjoshi1910.arxiv_explore.Utilities;
 
 import android.util.Log;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import sandeepjoshi1910.arxiv_explore.Model.Author;
 
 /**
  * Created by sandeepjoshi on 10/1/17.
@@ -46,5 +49,20 @@ public class Utils {
         String url = initialUrl + finalTerm + "&start=" + start + "&max_results=" + end + "&sortBy=relevance&sortOrder=ascending";
 
         return url;
+    }
+
+    public static String getFormattedAuthorNames(List<Author> authors) {
+
+        String fAuthors = "";
+
+        if(authors.size() == 1) {
+            return authors.get(0).getAuthorName();
+        }
+
+        for (Author author: authors) {
+            fAuthors = fAuthors + author.getAuthorName() + " • ";
+        }
+
+        return fAuthors;
     }
 }

@@ -1,6 +1,7 @@
 package sandeepjoshi1910.arxiv_explore;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import java.util.List;
 
 import sandeepjoshi1910.arxiv_explore.Model.Author;
 import sandeepjoshi1910.arxiv_explore.Model.DataItem;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by sandeepjoshi on 10/3/17.
