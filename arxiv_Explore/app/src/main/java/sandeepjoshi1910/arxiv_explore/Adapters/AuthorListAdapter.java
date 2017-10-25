@@ -1,4 +1,4 @@
-package sandeepjoshi1910.arxiv_explore;
+package sandeepjoshi1910.arxiv_explore.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import sandeepjoshi1910.arxiv_explore.Model.Author;
+import sandeepjoshi1910.arxiv_explore.R;
 
 /**
  * Created by sandeepjoshi on 10/24/17.

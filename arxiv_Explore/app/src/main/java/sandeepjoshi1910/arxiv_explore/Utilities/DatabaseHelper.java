@@ -11,6 +11,7 @@ import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.List;
 
+import sandeepjoshi1910.arxiv_explore.Article;
 import sandeepjoshi1910.arxiv_explore.Model.Author;
 import sandeepjoshi1910.arxiv_explore.Model.DataItem;
 
@@ -83,6 +84,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public long CreateArticle(DataItem article) {
+
 
         SQLiteDatabase db = this.getWritableDatabase();
 

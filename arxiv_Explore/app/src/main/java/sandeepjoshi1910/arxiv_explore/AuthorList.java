@@ -4,11 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.List;
 
+import sandeepjoshi1910.arxiv_explore.Adapters.AuthorListAdapter;
 import sandeepjoshi1910.arxiv_explore.Model.Author;
 
 public class AuthorList extends AppCompatActivity {

@@ -47,6 +47,7 @@ public class GeneralService extends IntentService {
         DataItem[] dataItems = new DataItem[0];
         try {
             dataItems = MyXMLParser.parseFeed(response);
+
         } catch (IOException e) {
             e.printStackTrace();
             return;

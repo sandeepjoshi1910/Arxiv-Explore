@@ -1,4 +1,4 @@
-package sandeepjoshi1910.arxiv_explore;
+package sandeepjoshi1910.arxiv_explore.Adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -12,6 +12,7 @@ import java.util.List;
 
 import sandeepjoshi1910.arxiv_explore.Model.Author;
 import sandeepjoshi1910.arxiv_explore.Model.DataItem;
+import sandeepjoshi1910.arxiv_explore.R;
 
 import static android.content.ContentValues.TAG;
 

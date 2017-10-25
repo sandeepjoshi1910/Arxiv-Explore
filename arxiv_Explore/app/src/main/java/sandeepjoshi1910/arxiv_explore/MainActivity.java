@@ -1,24 +1,18 @@
 package sandeepjoshi1910.arxiv_explore;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.Uri;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.List;
-
-import sandeepjoshi1910.arxiv_explore.Model.Author;
-import sandeepjoshi1910.arxiv_explore.Model.DataItem;
-import sandeepjoshi1910.arxiv_explore.Services.GeneralService;
+import sandeepjoshi1910.arxiv_explore.Utilities.ArticlesRetriever;
 import sandeepjoshi1910.arxiv_explore.Utilities.DatabaseHelper;
 import sandeepjoshi1910.arxiv_explore.Utilities.NetworkHelper;
 import sandeepjoshi1910.arxiv_explore.Utilities.Utils;
@@ -29,25 +23,6 @@ public class MainActivity extends AppCompatActivity {
     protected EditText searchTerm;
 
     DatabaseHelper db;
-
-    private BroadcastReceiver mBroadCastReciever = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            if(intent.hasExtra(GeneralService.SERVICE_PAYLOAD)) {
-                DataItem[] dataItems = (DataItem[]) intent.getParcelableArrayExtra(GeneralService.SERVICE_PAYLOAD);
-//                Log.i("Main", "onReceive: Data Items title: " + dataItems[2].title);
-
-//                List<DataItem[]> articleList = dataItems;
-
-                Bundle dataBundle = new Bundle();
-                dataBundle.putParcelableArray("articles", dataItems);
-                Intent articlesListIntent = new Intent(MainActivity.this, ArticleList.class);
-                articlesListIntent.putExtra("articles", dataItems);
-                startActivity(articlesListIntent);
-            }
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,14 +37,14 @@ public class MainActivity extends AppCompatActivity {
 
         Boolean networkOk = NetworkHelper.hasNetworkAccess(this);
 
-        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(mBroadCastReciever, new IntentFilter(GeneralService.SERVICE_MESSAGE));
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(mBroadCastReciever);
+
     }
 
     View.OnClickListener searchBtnListener = new View.OnClickListener() {
@@ -86,24 +61,41 @@ public class MainActivity extends AppCompatActivity {
             Boolean shouldProceed = new Utils().isSearchTermValid(searchTermEntered);
 
             if(shouldProceed) {
-//               getResults(searchTermEntered);
                 Intent articlesRetIntent = new Intent(MainActivity.this, ArticlesRetriever.class);
                 articlesRetIntent.putExtra("SearchTerm",searchTermEntered);
                 startActivity(articlesRetIntent);
             }
-
-
-            Intent articlesRetIntent = new Intent(MainActivity.this, ArticlesRetriever.class);
-            articlesRetIntent.putExtra("SearchTerm",searchTermEntered);
-            startActivity(articlesRetIntent);
         }
     };
 
-    void getResults(String searchTerm) {
 
-        Intent getArticlesIntent = new Intent(this, GeneralService.class);
-        getArticlesIntent.setData(Uri.parse(Utils.getFinalUrl(searchTerm,0,20)));
-        startService(getArticlesIntent);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+        return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.bkmarkedArticles:
+                Intent bookmarkIntent = new Intent(MainActivity.this, BookmarkList.class);
+                startActivity(bookmarkIntent);
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//***Change Here***
+        startActivity(intent);
+        finish();
+        System.exit(0);
+    }
 }

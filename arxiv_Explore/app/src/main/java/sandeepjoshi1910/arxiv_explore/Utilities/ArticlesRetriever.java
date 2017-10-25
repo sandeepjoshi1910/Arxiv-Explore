@@ -1,4 +1,4 @@
-package sandeepjoshi1910.arxiv_explore;
+package sandeepjoshi1910.arxiv_explore.Utilities;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,11 +10,13 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.Toast;
 
+import sandeepjoshi1910.arxiv_explore.ArticleList;
+import sandeepjoshi1910.arxiv_explore.MainActivity;
 import sandeepjoshi1910.arxiv_explore.Model.DataItem;
+import sandeepjoshi1910.arxiv_explore.R;
 import sandeepjoshi1910.arxiv_explore.Services.GeneralService;
-import sandeepjoshi1910.arxiv_explore.Utilities.Utils;
 
 public class ArticlesRetriever extends AppCompatActivity {
 
@@ -30,10 +32,17 @@ public class ArticlesRetriever extends AppCompatActivity {
 
             if(intent.hasExtra(GeneralService.SERVICE_PAYLOAD)) {
                 DataItem[] dataItems = (DataItem[]) intent.getParcelableArrayExtra(GeneralService.SERVICE_PAYLOAD);
-                Intent articlesListIntent = new Intent(ArticlesRetriever.this, ArticleList.class);
-                articlesListIntent.putExtra("articles", dataItems);
-                articlesListIntent.putExtra("PageNo",pageNo);
-                startActivity(articlesListIntent);
+
+                if(dataItems != null) {
+                    Intent articlesListIntent = new Intent(ArticlesRetriever.this, ArticleList.class);
+                    articlesListIntent.putExtra("articles", dataItems);
+                    articlesListIntent.putExtra("PageNo",pageNo);
+                    startActivity(articlesListIntent);
+                } else {
+                    Toast.makeText(context,"No results found!",Toast.LENGTH_LONG).show();
+                    Intent mainIntent = new Intent(ArticlesRetriever.this,MainActivity.class);
+                    startActivity(mainIntent);
+                }
             }
         }
     };
@@ -82,44 +91,6 @@ public class ArticlesRetriever extends AppCompatActivity {
         }
 
         getResults(search);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-
-        outState.putInt("start",start);
-        outState.putInt("max",max);
-        outState.putString("searchTerm",search);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-
-        if(savedInstanceState!= null && savedInstanceState.get("start") != null) {
-            start = (int) savedInstanceState.get("start");
-            start = start + max;
-        } else {
-            start = 0;
-        }
-
-        if(savedInstanceState!= null && savedInstanceState.get("max") != null) {
-            max = (int) savedInstanceState.get("max");
-        } else {
-            max = 20;
-        }
-
-        if(savedInstanceState!= null && savedInstanceState.get("searchTerm") != null) {
-            search = (String) savedInstanceState.get("searchTerm");
-        }
-
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
     }
 
     @Override
