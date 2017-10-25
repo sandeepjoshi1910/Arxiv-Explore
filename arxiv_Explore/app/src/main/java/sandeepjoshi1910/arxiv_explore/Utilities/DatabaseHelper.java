@@ -82,7 +82,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void CreateArticle(DataItem article) {
+    public long CreateArticle(DataItem article) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -114,7 +114,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.i(TAG, "CreateArticle: insert ID - AUTHOR" + ida);
         }
         
+        return id;
+    }
 
+
+    public long deleteArticle(DataItem article) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        long res = db.delete(TABLE_ARTICLES, ARTICLE_ID + " = ?", new String[] {article.id});
+
+        for (Author author: article.authors) {
+
+            deleteAuthor(author);
+        }
+
+        return res;
+    }
+
+    public long deleteAuthor(Author author) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        long res = db.delete(TABLE_AUTHORS, AUTHOR_NAME + " = ?", new String[] {author.getAuthorName()});
+
+        return res;
     }
 
     public List<DataItem> getBookmarkedArticles() {
@@ -122,6 +144,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String articleSelectQuery = "SELECT * FROM " + TABLE_ARTICLES;
 
         List<DataItem> articles = new ArrayList<DataItem>();
+
+        List<Author> authors = getAuthors();
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(articleSelectQuery, null);
@@ -138,9 +162,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 article.journal_ref = c.getString(c.getColumnIndex(ARTICLE_JOURNAL_REF));
                 article.pdf_link = c.getString(c.getColumnIndex(ARTICLE_PDF_LINK));
 
-                List<Author> authors = getAuthorsForArticle(article.id);
-
-                article.authors = authors;
+                for (Author author: authors) {
+                    if(author.getArticleID().equals(article.id)) {
+                        article.authors.add(author);
+                    }
+                }
 
                 articles.add(article);
 
@@ -151,10 +177,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return articles;
     }
 
-    public List<Author> getAuthorsForArticle(String articleID) {
-
-        String authorsQuery = "SELECT * FROM " + TABLE_AUTHORS + " WHERE "
-                + ARTICLE_ID + " = " + articleID;
+    public List<Author> getAuthors() {
 
         String allAuthors = "SELECT * FROM " + TABLE_AUTHORS;
 
@@ -170,14 +193,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Author author = new Author();
                 author.setAuthorName(c.getString(c.getColumnIndex(AUTHOR_NAME)));
                 author.setAuthorAffiliation(c.getString(c.getColumnIndex(AUTHOR_AFFILIATION)));
+                author.setArticleID(c.getString(c.getColumnIndex(ARTICLE_ID)));
                 authors.add(author);
                 Log.i(TAG, "AuthorName: " + author.getAuthorName());
                 Log.i(TAG, "AuthorAff: " + author.getAuthorAffiliation());
                 Log.i(TAG, "getAuthorsForArticle: ID" + c.getString(c.getColumnIndex(ARTICLE_ID)));
             }while (c.moveToNext());
         }
-
-
         return authors;
     }
 

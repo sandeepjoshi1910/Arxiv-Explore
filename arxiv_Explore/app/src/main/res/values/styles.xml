@@ -13,4 +13,8 @@
         <item name="colorButtonNormal">@color/mainAppColor</item>
     </style>
 
+    <style name="RedAccent" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorAccent">@color/mainAppColor</item>
+    </style>
+
 </resources>

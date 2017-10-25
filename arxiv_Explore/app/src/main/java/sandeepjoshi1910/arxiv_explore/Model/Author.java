@@ -12,6 +12,7 @@ public class Author implements Parcelable {
 
     protected String authorName;
     protected String authorAffiliation;
+    protected String articleID;
 
     public Author() {
 
@@ -20,12 +21,14 @@ public class Author implements Parcelable {
     protected Author(Parcel in) {
         authorName = in.readString();
         authorAffiliation = in.readString();
+        articleID = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(authorName);
         dest.writeString(authorAffiliation);
+        dest.writeString(articleID);
     }
 
     @Override
@@ -48,11 +51,16 @@ public class Author implements Parcelable {
     public void Author() {
         this.authorName = null;
         this.authorAffiliation = null;
+        this.articleID = "";
     }
 
     public String getAuthorName() {
         return this.authorName;
     }
+
+    public String getArticleID() {return  this.articleID; }
+
+    public void setArticleID(String articleid) { this.articleID = articleid; }
 
     public String getAuthorAffiliation() {
         return this.authorAffiliation;

@@ -30,13 +30,6 @@ public class ArticlesRetriever extends AppCompatActivity {
 
             if(intent.hasExtra(GeneralService.SERVICE_PAYLOAD)) {
                 DataItem[] dataItems = (DataItem[]) intent.getParcelableArrayExtra(GeneralService.SERVICE_PAYLOAD);
-//                Log.i("Main", "onReceive: Data Items title: " + dataItems[2].title);
-
-//                List<DataItem[]> articleList = dataItems;
-
-//                Bundle dataBundle = new Bundle();
-//                dataBundle.putParcelableArray("articles", dataItems);
-
                 Intent articlesListIntent = new Intent(ArticlesRetriever.this, ArticleList.class);
                 articlesListIntent.putExtra("articles", dataItems);
                 articlesListIntent.putExtra("PageNo",pageNo);

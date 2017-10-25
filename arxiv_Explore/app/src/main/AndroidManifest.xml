@@ -27,7 +27,8 @@
         <activity android:name=".ArticleList" />
         <activity android:name=".Article" />
         <activity android:name=".PDFView" />
-        <activity android:name=".ArticlesRetriever"></activity>
+        <activity android:name=".ArticlesRetriever" />
+        <activity android:name=".AuthorList"></activity>
     </application>
 
 </manifest>

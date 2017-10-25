@@ -117,5 +117,11 @@ public class ArticleList extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent mainIntent = new Intent(ArticleList.this, MainActivity.class);
+        startActivity(mainIntent);
+    }
+
 
 }
