@@ -18,6 +18,9 @@ public class BookmarkList extends AppCompatActivity {
     DatabaseHelper dbHelper;
     List<DataItem> mArticles;
 
+    protected BookmarkListAdapter bookmarkListAdapter;
+    protected ListView bookmarksView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,8 +30,8 @@ public class BookmarkList extends AppCompatActivity {
 
         mArticles = dbHelper.getBookmarkedArticles();
 
-        ListView bookmarksView = (ListView)findViewById(R.id.bookmarkListView);
-        BookmarkListAdapter bookmarkListAdapter = new BookmarkListAdapter(this,mArticles);
+        bookmarksView = (ListView)findViewById(R.id.bookmarkListView);
+        bookmarkListAdapter = new BookmarkListAdapter(this,mArticles);
 
         bookmarksView.setDivider(null);
         bookmarksView.setAdapter(bookmarkListAdapter);
@@ -46,5 +49,19 @@ public class BookmarkList extends AppCompatActivity {
                 startActivity(articleIntent);
             }
         });
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dbHelper = new DatabaseHelper(this);
+        mArticles = dbHelper.getBookmarkedArticles();
+
+        bookmarkListAdapter = new BookmarkListAdapter(this,mArticles);
+        bookmarksView.setAdapter(bookmarkListAdapter);
+        bookmarkListAdapter.notifyDataSetChanged();
+
     }
 }
