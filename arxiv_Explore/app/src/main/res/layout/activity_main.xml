@@ -1,44 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="sandeepjoshi1910.arxiv_explore.MainActivity">
 
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="175dp"
+        android:layout_height="184dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/arxlogo"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        />
+
     <TextView
-        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Arxiv Explore"
+        android:text="Arx Explore"
         android:textSize="30dp"
-        android:textStyle="bold"
-        android:textColor="#351EC3"
-        tools:layout_editor_absoluteX="107dp"
-        tools:layout_editor_absoluteY="116dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="122dp" />
+        android:textColor="#C0392B"
+        android:fontFamily="sans-serif"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="explore arXiv.org repository"
+        android:textSize="15dp"
+        android:textStyle="italic"
+        android:textColor="@color/Black"
+        android:layout_gravity="center_horizontal"/>
 
     <EditText
         android:id="@+id/searchTerm"
-        android:layout_width="320dp"
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="60dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text=""
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/logo"
+        android:layout_gravity="center_horizontal"
+        android:textCursorDrawable="@xml/red_cursor"
+        android:textAlignment="center"
+        android:gravity="center"/>
 
     <Button
         android:id="@+id/searchButton"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/searchTerm"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="78dp"
-        android:text="Search" />
+        android:layout_marginTop="50dp"
+        android:text="Search"
+        android:textColor="@color/White"
+        android:layout_gravity="center_horizontal"
+        android:background="#C0392B"/>
 
 
-</RelativeLayout>
+</LinearLayout>

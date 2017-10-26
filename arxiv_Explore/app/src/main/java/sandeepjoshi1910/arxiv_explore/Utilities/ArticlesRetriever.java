@@ -37,6 +37,7 @@ public class ArticlesRetriever extends AppCompatActivity {
                     Intent articlesListIntent = new Intent(ArticlesRetriever.this, ArticleList.class);
                     articlesListIntent.putExtra("articles", dataItems);
                     articlesListIntent.putExtra("PageNo",pageNo);
+                    articlesListIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(articlesListIntent);
                 } else {
                     Toast.makeText(context,"No results found!",Toast.LENGTH_LONG).show();

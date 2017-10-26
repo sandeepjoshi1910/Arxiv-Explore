@@ -22,7 +22,10 @@ public class PDFView extends AppCompatActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setPluginsEnabled(true);
+        webView.loadUrl("https://docs.google.com/viewer?"+pdf_url);
         String googleDocs = "https://docs.google.com/viewer?url=";
-        webView.loadUrl("http://docs.google.com/gview?embedded=true&url=" + url);
+        webView.loadUrl(url);
     }
 }

@@ -1,8 +1,12 @@
 package sandeepjoshi1910.arxiv_explore;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import sandeepjoshi1910.arxiv_explore.Utilities.ArticlesRetriever;
@@ -21,8 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected Button searchBtn;
     protected EditText searchTerm;
-
-    DatabaseHelper db;
+    protected ImageView logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +41,19 @@ public class MainActivity extends AppCompatActivity {
 
         Boolean networkOk = NetworkHelper.hasNetworkAccess(this);
 
+        logo = (ImageView)findViewById(R.id.logo);
 
+        searchTerm.getBackground().setColorFilter(ContextCompat.getColor(this, R.color.appColor), PorterDuff.Mode.SRC_ATOP);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int width = displayMetrics.widthPixels;
+        int height = displayMetrics.heightPixels;
+
+        int logoWidth = (int) width/2;
+
+        logo.setImageBitmap(Utils.decodeSampledBitmapFromResource(this.getResources(),
+                R.drawable.brain,100, 100));
     }
 
     @Override
@@ -91,11 +107,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//***Change Here***
-        startActivity(intent);
         finish();
-        System.exit(0);
     }
 }

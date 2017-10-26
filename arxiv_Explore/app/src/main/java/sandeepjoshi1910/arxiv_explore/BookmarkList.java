@@ -49,8 +49,6 @@ public class BookmarkList extends AppCompatActivity {
                 startActivity(articleIntent);
             }
         });
-
-
     }
 
     @Override

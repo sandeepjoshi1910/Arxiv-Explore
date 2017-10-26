@@ -114,6 +114,7 @@ public class ArticleList extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent mainIntent = new Intent(ArticleList.this, MainActivity.class);
+        mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(mainIntent);
     }
 
