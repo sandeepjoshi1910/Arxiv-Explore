@@ -89,10 +89,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        article.journal_ref = "asda";
-        article.comment = "c";
-        article.pdf_link = "asdsa";
-        article.publishedDate = "ertw";
+        if(article.journal_ref == null) {
+            article.journal_ref = "";
+        }
+        if(article.pdf_link == null) {
+            article.pdf_link = "";
+        }
+        if(article.publishedDate == null) {
+            article.publishedDate = "";
+        }
+        if(article.comment == null) {
+            article.comment = "";
+        }
         values.put(ARTICLE_ID,article.id);
         values.put(PUBLISHED_DATE,article.publishedDate);
         values.put(ARTICLE_TITLE,article.title);

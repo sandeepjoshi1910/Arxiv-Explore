@@ -94,13 +94,6 @@ public class ArticlesRetriever extends AppCompatActivity {
         getResults(search);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(mBroadCastReciever);
-    }
-
 
     void getResults(String searchTerm) {
 
@@ -108,4 +101,12 @@ public class ArticlesRetriever extends AppCompatActivity {
         getArticlesIntent.setData(Uri.parse(Utils.getFinalUrl(searchTerm,start,max)));
         startService(getArticlesIntent);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(mBroadCastReciever);
+    }
+
 }

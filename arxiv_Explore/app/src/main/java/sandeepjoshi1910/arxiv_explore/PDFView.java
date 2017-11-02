@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -25,6 +26,12 @@ public class PDFView extends AppCompatActivity {
 
         Intent pdfIntent = getIntent();
         String url = pdfIntent.getExtras().getString("pdflink");
+
+        if(url == "" || url == null) {
+            Toast.makeText(this,"PDF link not found",Toast.LENGTH_SHORT).show();
+            super.onBackPressed();
+            return;
+        }
 
         pdfView.getSettings().setJavaScriptEnabled(true);
         pdfView.setLayerType(View.LAYER_TYPE_HARDWARE, null);

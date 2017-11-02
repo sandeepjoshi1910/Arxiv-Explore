@@ -32,6 +32,10 @@ public class BookmarkList extends AppCompatActivity {
     private boolean isLongclicked = false;
     List<Integer> selectedArticles = new ArrayList<Integer>();
 
+    private final int highlight_R = 245;
+    private final int highlight_G = 183;
+    private final int highlight_B = 177;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +73,7 @@ public class BookmarkList extends AppCompatActivity {
                         selectedArticles.remove(selectedArticles.indexOf(i));
 
                     } else {
-                        view.setBackgroundColor(getResources().getColor(R.color.Chocolate));
+                        view.setBackgroundColor(Color.rgb(highlight_R,highlight_G,highlight_B));
                         selectedArticles.add(i);
                     }
 
@@ -93,7 +97,7 @@ public class BookmarkList extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 isLongclicked = true;
-                view.setBackgroundColor(getResources().getColor(R.color.Chocolate));
+                view.setBackgroundColor(Color.rgb(highlight_R,highlight_G,highlight_B));
                 showOption(R.id.remove_selected);
                 return false;
             }

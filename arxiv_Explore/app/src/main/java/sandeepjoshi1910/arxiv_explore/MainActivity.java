@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.ArraySet;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -49,22 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
         searchBtn.setOnClickListener(searchBtnListener);
 
-        Boolean networkOk = NetworkHelper.hasNetworkAccess(this);
-
-        logo = (ImageView)findViewById(R.id.logo);
-
-        searchTerm.getBackground().setColorFilter(ContextCompat.getColor(this, R.color.appColor), PorterDuff.Mode.SRC_ATOP);
-
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int width = displayMetrics.widthPixels;
-        int height = displayMetrics.heightPixels;
-
-        int logoWidth = (int) width/2;
-
-        logo.setImageBitmap(Utils.decodeSampledBitmapFromResource(this.getResources(),
-                R.drawable.brain,100, 100));
-
+        TextView logo = (TextView)findViewById(R.id.logoText);
+        Typeface custom_font = Typeface.createFromAsset(getAssets(),  "fonts/logofont.ttf");
+        logo.setText("Arx Explore");
+        logo.setTypeface(custom_font);
         putBookmaekedIdsToSprefs();
 
     }
