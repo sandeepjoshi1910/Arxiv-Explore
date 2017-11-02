@@ -55,8 +55,6 @@ public class Article extends AppCompatActivity {
         viewPDF.setOnClickListener(viewPdfListener);
         bookmark_btn.setOnClickListener(bookmarkBtnListener);
 
-        getBookmarkedItems();
-
         if(isCurrentArticleBookmarked()) {
             bookmark_btn.setText("Bookmarked");
             bookmark_btn.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.bookmark_full,0);
@@ -68,20 +66,11 @@ public class Article extends AppCompatActivity {
 
     private boolean isCurrentArticleBookmarked() {
 
-        for (DataItem article: mArticles) {
-            if(article.id.equals(currentArticle.id)) {
-                return true;
-            }
+        if(Utils.savedArticleIds.contains(currentArticle.id)) {
+            return true;
         }
 
         return false;
-    }
-
-    private void getBookmarkedItems() {
-
-        dbHelper = new DatabaseHelper(this);
-
-        mArticles = dbHelper.getBookmarkedArticles();
     }
 
     View.OnClickListener viewPdfListener = new View.OnClickListener() {

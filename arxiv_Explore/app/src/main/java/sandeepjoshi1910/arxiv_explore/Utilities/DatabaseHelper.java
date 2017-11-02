@@ -129,7 +129,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             deleteAuthor(author);
         }
-
+        Utils.savedArticleIds.remove(article.id);
         return res;
     }
 

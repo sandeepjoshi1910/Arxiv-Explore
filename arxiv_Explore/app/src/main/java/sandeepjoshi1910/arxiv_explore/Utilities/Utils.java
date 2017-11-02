@@ -3,9 +3,13 @@ package sandeepjoshi1910.arxiv_explore.Utilities;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.util.ArraySet;
 import android.util.Log;
 
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +21,7 @@ import sandeepjoshi1910.arxiv_explore.Model.Author;
 
 public class Utils {
 
+    public static Set<String> savedArticleIds;
 
     public Boolean isSearchTermValid(String searchTerm) {
 

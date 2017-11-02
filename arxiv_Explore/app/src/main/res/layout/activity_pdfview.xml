@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     tools:context="sandeepjoshi1910.arxiv_explore.PDFView">
 
+
     <WebView
-        android:id="@+id/webview"
+        android:id="@+id/pdfView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_height="match_parent"/>
+
 </RelativeLayout>

@@ -1,9 +1,12 @@
 package sandeepjoshi1910.arxiv_explore;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.ArraySet;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -17,6 +20,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.List;
+import java.util.Set;
+
+import sandeepjoshi1910.arxiv_explore.Model.DataItem;
 import sandeepjoshi1910.arxiv_explore.Utilities.ArticlesRetriever;
 import sandeepjoshi1910.arxiv_explore.Utilities.DatabaseHelper;
 import sandeepjoshi1910.arxiv_explore.Utilities.NetworkHelper;
@@ -27,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
     protected Button searchBtn;
     protected EditText searchTerm;
     protected ImageView logo;
+
+    protected DatabaseHelper dbHelper;
+    protected Menu optionsMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +64,29 @@ public class MainActivity extends AppCompatActivity {
 
         logo.setImageBitmap(Utils.decodeSampledBitmapFromResource(this.getResources(),
                 R.drawable.brain,100, 100));
+
+        putBookmaekedIdsToSprefs();
+
+    }
+
+    private void putBookmaekedIdsToSprefs() {
+
+        dbHelper = new DatabaseHelper(this);
+        List<DataItem> bkmarkedArticles = dbHelper.getBookmarkedArticles();
+
+        Set<String> bkArticleIDs = new ArraySet<>();
+
+        for (DataItem article: bkmarkedArticles) {
+            bkArticleIDs.add(article.id);
+        }
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putStringSet("bookmarkedIds",bkArticleIDs);
+        editor.apply();
+
+        Utils.savedArticleIds = bkArticleIDs;
     }
 
     @Override
@@ -69,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
             if(!NetworkHelper.hasNetworkAccess(getApplicationContext())) {
                 Log.i("Click", "onClick: No Network Access... Can't get articles");
-                Toast.makeText(getApplicationContext(),"No Network Access",Toast.LENGTH_SHORT);
+                Toast.makeText(getApplicationContext(),"Check your network connection and retry",Toast.LENGTH_SHORT);
                 return;
             }
 
@@ -89,8 +122,20 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
+        optionsMenu = menu;
+//        checkAndHideOptions();
         return true;
     }
+
+//    void checkAndHideOptions() {
+//        dbHelper = new DatabaseHelper(this);
+//
+//        List<DataItem> bookmarkedArticles = dbHelper.getBookmarkedArticles();
+//
+//        if(bookmarkedArticles.size() <= 0) {
+//            optionsMenu.getItem(R.id.bkmarkedArticles).setVisible(false);
+//        }
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

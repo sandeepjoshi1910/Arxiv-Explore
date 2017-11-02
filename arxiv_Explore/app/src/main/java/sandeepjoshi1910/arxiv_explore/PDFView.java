@@ -1,31 +1,43 @@
 package sandeepjoshi1910.arxiv_explore;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 public class PDFView extends AppCompatActivity {
 
-    protected WebView webView;
+    protected WebView pdfView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfview);
 
-        webView = (WebView) findViewById(R.id.webview);
+        pdfView = (WebView) findViewById(R.id.pdfView);
+
+
 
         Intent pdfIntent = getIntent();
         String url = pdfIntent.getExtras().getString("pdflink");
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-        webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setPluginsEnabled(true);
-        webView.loadUrl("https://docs.google.com/viewer?"+pdf_url);
+
+        pdfView.getSettings().setJavaScriptEnabled(true);
+        pdfView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        pdfView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
+        pdfView.getSettings().setJavaScriptEnabled(true);
+        pdfView.loadUrl("https://docs.google.com/viewer?"+url);
         String googleDocs = "https://docs.google.com/viewer?url=";
-        webView.loadUrl(url);
+        String pdfUrl = null;
+        try {
+            pdfUrl = googleDocs + URLEncoder.encode(url, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        pdfView.loadUrl(pdfUrl);
     }
 }
