@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="appColor">#C0392B</color>
-    <color name="colorPrimary">#c0392b</color>
+    <color name="appColor">#922B21</color>
+    <color name="colorPrimary">#922B21</color>
     <color name="colorPrimaryDark">#a43025</color>
     <color name="colorAccent">#FF4081</color>
 
@@ -163,6 +163,6 @@
     <color name="Navy">#000080</color>
     <color name="Black">#000000</color>
 
-    <color name="mainAppColor">#C0392B</color>
+    <color name="mainAppColor">#922B21</color>
     <color name="primary_text_default_material_light">#de000000</color>
 </resources>

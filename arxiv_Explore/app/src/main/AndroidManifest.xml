@@ -23,12 +23,23 @@
             android:name=".Services.GeneralService"
             android:exported="false" />
 
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.sandeepjoshi1910.arxiv_explore.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <activity android:name=".ArticleList" />
         <activity android:name=".Article" />
         <activity android:name=".PDFView" />
         <activity android:name=".Utilities.ArticlesRetriever" />
         <activity android:name=".AuthorList" />
-        <activity android:name=".BookmarkList"></activity>
+        <activity android:name=".BookmarkList" />
+        <activity android:name=".AdvancedSearch"></activity>
     </application>
 
 </manifest>

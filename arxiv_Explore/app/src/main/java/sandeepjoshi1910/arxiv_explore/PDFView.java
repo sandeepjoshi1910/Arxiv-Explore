@@ -37,7 +37,8 @@ public class PDFView extends AppCompatActivity {
         pdfView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         pdfView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
         pdfView.getSettings().setJavaScriptEnabled(true);
-        pdfView.loadUrl("https://docs.google.com/viewer?"+url);
+//        pdfView.loadUrl("https://docs.google.com/viewer?"+url);
+        pdfView.loadUrl(url);
         String googleDocs = "https://docs.google.com/viewer?url=";
         String pdfUrl = null;
         try {

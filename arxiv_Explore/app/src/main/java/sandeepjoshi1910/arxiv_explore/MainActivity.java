@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     protected EditText searchTerm;
     protected ImageView logo;
 
+    protected Button advancedSearchBtn;
+
     protected DatabaseHelper dbHelper;
     protected Menu optionsMenu;
 
@@ -51,11 +53,21 @@ public class MainActivity extends AppCompatActivity {
 
         searchBtn.setOnClickListener(searchBtnListener);
 
+//        advancedSearchBtn = (Button) findViewById(R.id.advanced_search_btn);
+
         TextView logo = (TextView)findViewById(R.id.logoText);
         Typeface custom_font = Typeface.createFromAsset(getAssets(),  "fonts/logofont.ttf");
         logo.setText("Arx Explore");
         logo.setTypeface(custom_font);
         putBookmaekedIdsToSprefs();
+
+//        advancedSearchBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent i = new Intent(MainActivity.this,AdvancedSearch.class);
+//                startActivity(i);
+//            }
+//        });
 
     }
 
@@ -82,8 +94,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-
     }
 
     View.OnClickListener searchBtnListener = new View.OnClickListener() {

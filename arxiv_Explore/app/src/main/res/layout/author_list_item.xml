@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16dp"
-        android:textColor="#C0392B"
+        android:textColor="#922B21"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="10dp"

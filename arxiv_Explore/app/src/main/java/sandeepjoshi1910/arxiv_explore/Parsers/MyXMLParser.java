@@ -67,11 +67,7 @@ public class MyXMLParser {
                                 currentArticle.pdf_link = parser.getAttributeValue(1);
                             }
                         }
-
-
                     }
-
-
                     break;
 
                 case XmlPullParser.END_TAG:
@@ -148,16 +144,10 @@ public class MyXMLParser {
                     }
                     break;
             }
-
             eventType = parser.next();
-
-        } // end while loop
-
+        }
         DataItem[] dataItems = new DataItem[articleList.size()];
         return articleList.toArray(dataItems);
-
-
-
     }
 }
 

@@ -123,7 +123,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             long ida = db.insert(TABLE_AUTHORS,null,values);
             Log.i(TAG, "CreateArticle: insert ID - AUTHOR" + ida);
         }
-        
+        Utils.savedArticleIds.add(article.id);
         return id;
     }
 

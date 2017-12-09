@@ -18,7 +18,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textStyle="bold"
-        android:textColor="#C0392B"
+        android:textColor="#922B21"
         android:textSize="15dp"
         android:layout_marginBottom="7dp" />
 
