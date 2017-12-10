@@ -11,6 +11,8 @@ import android.provider.ContactsContract;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +48,7 @@ public class Article extends AppCompatActivity {
     protected TextView articleTitle;
     protected TextView authors;
     protected TextView summary;
+    protected TextView articleLink;
     protected Button bookmark_btn;
     protected Button viewPDF;
 
@@ -70,10 +73,15 @@ public class Article extends AppCompatActivity {
         articleTitle = (TextView) findViewById(R.id.article_title);
         authors = (TextView) findViewById(R.id.article_authors);
         summary = (TextView) findViewById(R.id.article_summary);
+        articleLink = (TextView) findViewById(R.id.articleLink);
 
         articleTitle.setText(currentArticle.title);
         authors.setText(Utils.getFormattedAuthorNames(currentArticle.authors));
         summary.setText(currentArticle.summary);
+        SpannableString content = new SpannableString(currentArticle.id);
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        articleLink.setText("Article on arXiv : " + content);
+
         bookmark_btn = (Button)findViewById(R.id.bookmark_btn);
         viewPDF = (Button)findViewById(R.id.viewpdf);
         shareBtn = (Button) findViewById(R.id.shareBtn);
@@ -97,6 +105,16 @@ public class Article extends AppCompatActivity {
                 sendIntent.putExtra(Intent.EXTRA_TEXT, currentArticle.id.replace("http","https"));
                 sendIntent.setType("text/plain");
                 startActivity(Intent.createChooser(sendIntent, "Share the article..."));
+            }
+        });
+
+        articleLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent viewWebpageIntent = new Intent();
+                viewWebpageIntent.setAction(Intent.ACTION_VIEW);
+                viewWebpageIntent.putExtra(Intent.EXTRA_TEXT, currentArticle.id.replace("http","https"));
+                startActivity(viewWebpageIntent.createChooser(viewWebpageIntent,"Go to article on arXiv.org"));
             }
         });
 
