@@ -98,7 +98,11 @@ public class ArticlesRetriever extends AppCompatActivity {
     void getResults(String searchTerm) {
 
         Intent getArticlesIntent = new Intent(this, GeneralService.class);
-        getArticlesIntent.setData(Uri.parse(Utils.getFinalUrl(searchTerm,start,max)));
+        if(searchTerm.contains("http")) {
+            getArticlesIntent.setData(Uri.parse(searchTerm));
+        } else {
+            getArticlesIntent.setData(Uri.parse(Utils.getFinalUrl(searchTerm,start,max)));
+        }
         startService(getArticlesIntent);
     }
 

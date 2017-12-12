@@ -7,6 +7,10 @@
         <item>Title</item>
         <item>Author</item>
         <item>Abstract</item>
-        <item>Combination</item>
+    </string-array>
+
+    <string-array name="selection_options">
+        <item>and contains</item>
+        <item>and doesn\'t contain</item>
     </string-array>
 </resources>

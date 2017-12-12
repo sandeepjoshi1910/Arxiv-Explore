@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         searchBtn.setOnClickListener(searchBtnListener);
 
-//        advancedSearchBtn = (Button) findViewById(R.id.advanced_search_btn);
+        advancedSearchBtn = (Button) findViewById(R.id.advanced_search_btn);
 
         TextView logo = (TextView)findViewById(R.id.logoText);
         Typeface custom_font = Typeface.createFromAsset(getAssets(),  "fonts/logofont.ttf");
@@ -61,13 +61,13 @@ public class MainActivity extends AppCompatActivity {
         logo.setTypeface(custom_font);
         putBookmaekedIdsToSprefs();
 
-//        advancedSearchBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i = new Intent(MainActivity.this,AdvancedSearch.class);
-//                startActivity(i);
-//            }
-//        });
+        advancedSearchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this,AdvancedSearch.class);
+                startActivity(i);
+            }
+        });
 
     }
 
